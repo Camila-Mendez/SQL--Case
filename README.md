@@ -16,8 +16,8 @@ Esta práctica aplica expresiones `CASE` dentro de consultas `SELECT` para conve
 |---|---|
 | Camila Méndez Reyes | |
 | Valentina Zamora Cartín | |
-| | |
-| | |
+| Diego Aguilar Jiménez | |
+| Génesis Chaverri Rodríguez | |
 
 ## Estructura del repositorio
 

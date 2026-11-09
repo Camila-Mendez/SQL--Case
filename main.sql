@@ -34,11 +34,44 @@ VALUES
     (1012, 'Lucía Chaves',    'Medio',  'Media', '2026-11-08', 'En proceso');
 
 -- PARTE 3. CONSULTA DE PRIORIZACIÓN
+
+-- =========================================================
+-- DOCUMENTACIÓN (Persona 4)
+--
+-- Lógica de clasificación:
+-- CASE evalúa las condiciones de arriba hacia abajo y
+-- devuelve el primer resultado que se cumple.
+--
+-- Regla 1: Impacto Alto y Urgencia Alta = Crítica.
+-- Regla 2: Impacto Alto o Urgencia Alta = Alta.
+-- Regla 3: Impacto Medio y Urgencia Media = Media.
+-- Regla 4: Cualquier otra combinación = Baja.
+
+-- La condición de prioridad crítica se evalúa primero
+-- porque CASE devuelve el primer resultado que cumple.
+-- Si la condición de prioridad alta estuviera antes,
+-- un ticket Alto + Alta nunca llegaría a clasificarse
+-- como 'Crítica'.
+--
+-- Validación esperada:
+-- - Cada ticket debe recibir la prioridad correcta.
+-- - Los tickets cerrados no deben aparecer.
+-- - El resultado debe ordenarse como:
+--   Crítica -> Alta -> Media -> Baja.
+--
+-- Supuestos:
+-- - Los valores se almacenan como:
+--   'Alto', 'Medio', 'Bajo',
+--   'Alta', 'Media', 'Baja',
+--   'Abierto', 'En proceso' y 'Cerrado'.
+-- =========================================================
+
 -- El CASE en SELECT (Persona 2): columna prioridad_atencion con AND y OR.
 -- IMPORTANTE: el orden de los WHEN importa. CASE devuelve el PRIMER WHEN
 -- que se cumpla, así que 'Crítica' (Alto AND Alta) debe ir primero.
 -- Si "Alto OR Alta" fuera antes, un ticket Alto + Alta quedaría como
 -- 'Alta' y nunca llegaría a 'Crítica'.
+
 WITH tickets_priorizados AS (
     SELECT
         ticket_id,

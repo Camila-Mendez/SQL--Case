@@ -33,7 +33,12 @@ VALUES
     (1011, 'Gabriel Mora',    'Bajo',   'Alta',  '2026-11-03', 'Cerrado'),
     (1012, 'Lucía Chaves',    'Medio',  'Media', '2026-11-08', 'En proceso');
 
--- PARTE 3. CONSULTA DE PRIORIZACIÓN (consulta del equipo)
+-- PARTE 3. CONSULTA DE PRIORIZACIÓN
+-- El CASE en SELECT (Persona 2): columna prioridad_atencion con AND y OR.
+-- IMPORTANTE: el orden de los WHEN importa. CASE devuelve el PRIMER WHEN
+-- que se cumpla, así que 'Crítica' (Alto AND Alta) debe ir primero.
+-- Si "Alto OR Alta" fuera antes, un ticket Alto + Alta quedaría como
+-- 'Alta' y nunca llegaría a 'Crítica'.
 WITH tickets_priorizados AS (
     SELECT
         ticket_id,
@@ -43,9 +48,13 @@ WITH tickets_priorizados AS (
         fecha_reporte,
         estado,
         CASE
+            -- 1) Lo más restrictivo primero: ambas condiciones (AND)
             WHEN impacto = 'Alto'  AND urgencia = 'Alta'  THEN 'Crítica'
+            -- 2) Solo una de las dos (OR); los Alto+Alta ya se clasificaron arriba
             WHEN impacto = 'Alto'  OR  urgencia = 'Alta'  THEN 'Alta'
+            -- 3) Impacto medio y urgencia media
             WHEN impacto = 'Medio' AND urgencia = 'Media' THEN 'Media'
+            -- 4) Cualquier otro caso
             ELSE 'Baja'
         END AS prioridad_atencion
     FROM tickets

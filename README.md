@@ -15,6 +15,7 @@ Esta práctica aplica expresiones `CASE` dentro de consultas `SELECT` para conve
 | Nombre | Rol |
 |---|---|
 | Camila Méndez Reyes | |
+| Valentina Zamora Cartín | |
 | | |
 | | |
 
